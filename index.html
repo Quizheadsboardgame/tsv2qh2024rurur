@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taylor Swift Quiz Box</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #f7e4e7; /* Light pink background */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+            position: relative;
+        }
+
+        #quiz-headings {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #yellow-box {
+            width: 200px;
+            height: 200px;
+            background-color: #fed405;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 5px solid black;
+            text-transform: uppercase;
+        }
+
+        .color-boxes {
+            display: flex;
+            justify-content: space-between;
+            width: 220px;
+        }
+
+        .color-box {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        #green-box {
+            background-color: #7fd15a;
+        }
+
+        #orange-box {
+            background-color: #ff914d;
+        }
+
+        #red-box {
+            background-color: #ee1d23;
+        }
+
+        #purple-box {
+            background-color: #8456e5;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #tagline {
+            margin-top: 40px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #go-back-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: transparent;
+            color: black;
+            border: 2px solid black;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-headings"></div>
+    <div id="yellow-box">TAYLOR SWIFT</div>
+    <div class="color-boxes">
+        <div id="green-box" class="color-box"></div>
+        <div id="orange-box" class="color-box"></div>
+        <div id="red-box" class="color-box"></div>
+        <div id="purple-box" class="color-box"></div>
+    </div>
+    <div id="question-answer"></div>
+    <div id="tagline">QuizHeads. The forever changing trivia board game!</div>
+    <a id="go-back-button" href="https://quizheads.co.uk/masterquizzes">GO BACK</a>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const greenBox = document.getElementById("green-box");
+        const orangeBox = document.getElementById("orange-box");
+        const redBox = document.getElementById("red-box");
+        const purpleBox = document.getElementById("purple-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of Taylor Swift trivia questions and answers
+        const taylorSwiftQuestions = [
+            { question: "What was Taylor Swift's debut single?", answer: "Tim McGraw" },
+            { question: "What year was Taylor Swift born?", answer: "1989" },
+            { question: "Which album won Taylor Swift her first Grammy for Album of the Year?", answer: "Fearless" },
+            { question: "What is Taylor Swift's middle name?", answer: "Alison" },
+            { question: "In which state was Taylor Swift born?", answer: "Pennsylvania" },
+            { question: "Which song by Taylor Swift talks about the end of summer and a lost love?", answer: "All Too Well" },
+            { question: "Which Taylor Swift album was a surprise release in 2020?", answer: "Folklore" },
+            { question: "What is the name of Taylor Swift’s second studio album?", answer: "Fearless" },
+            { question: "Which song did Taylor Swift perform at the 2021 Grammy Awards?", answer: "Cardigan" },
+            { question: "What is Taylor Swift's lucky number?", answer: "13" },
+            { question: "Which Taylor Swift album features the song 'Shake It Off'?", answer: "1989" },
+            { question: "In which city did Taylor Swift first move to pursue her music career?", answer: "Nashville" },
+            { question: "What is the title of Taylor Swift's debut album?", answer: "Taylor Swift" },
+            { question: "Which song won Taylor Swift the Grammy Award for Best Music Video in 2016?", answer: "Bad Blood" },
+            { question: "In which Taylor Swift music video does she wear a cheerleader outfit?", answer: "Shake It Off" },
+            { question: "What is the name of Taylor Swift's documentary released on Netflix?", answer: "Miss Americana" },
+            { question: "Which Taylor Swift album is considered her first 'pop' album?", answer: "1989" },
+            { question: "Who did Taylor Swift write the song 'Back to December' about?", answer: "Taylor Lautner" },
+            { question: "Which Taylor Swift song mentions 'Scarlet letters'?", answer: "Love Story" },
+            { question: "In which Taylor Swift song is there a reference to Romeo and Juliet?", answer: "Love Story" },
+            { question: "Which album was Taylor Swift's first entirely self-written album?", answer: "Speak Now" },
+            { question: "What is the first track on Taylor Swift's album '1989'?", answer: "Welcome to New York" },
+            { question: "Which Taylor Swift album includes the song 'Exile' featuring Bon Iver?", answer: "Folklore" },
+            { question: "Which Taylor Swift song has the lyric 'You made a rebel of a careless man's careful daughter'?", answer: "Mine" },
+            { question: "What year did Taylor Swift release the album 'Red'?", answer: "2012" },
+            { question: "What is the name of Taylor Swift's 2019 album?", answer: "Lover" },
+            { question: "What is the title of Taylor Swift's song about her feud with Kanye West?", answer: "Look What You Made Me Do" },
+            { question: "Which Taylor Swift song includes the lyric 'I've got a blank space baby, and I'll write your name'?", answer: "Blank Space" },
+            { question: "Which of Taylor Swift’s albums features the song 'The Man'?", answer: "Lover" },
+            { question: "Which song did Taylor Swift release in response to her masters controversy?", answer: "The Man" },
+            { question: "Which Taylor Swift song was featured in the movie 'The Hunger Games'?", answer: "Safe & Sound" },
+            { question: "In which music video does Taylor Swift crash her ex-boyfriend’s wedding?", answer: "I Knew You Were Trouble" },
+            { question: "What is the name of Taylor Swift's re-recorded version of 'Fearless'?", answer: "Fearless (Taylor's Version)" },
+            { question: "Which Taylor Swift song includes the lyric 'You call me up again just to break me like a promise'?", answer: "All Too Well" },
+            { question: "Which Taylor Swift album was described as a 'love letter to New York'?", answer: "1989" },
+            { question: "What is Taylor Swift's favorite number?", answer: "13" },
+            { question: "Which Taylor Swift album features the song 'Willow'?", answer: "Evermore" },
+            { question: "Which Taylor Swift song is about her relationship with Jake Gyllenhaal?", answer: "All Too Well" },
+            { question: "What was the lead single from Taylor Swift's album 'Reputation'?", answer: "Look What You Made Me Do" },
+            { question: "Which song did Taylor Swift perform with Brendon Urie of Panic! At The Disco?", answer: "ME!" },
+            { question: "What is the name of Taylor Swift’s father?", answer: "Scott Swift" },
+            { question: "Which Taylor Swift song has the lyric 'Darling, I'm a nightmare dressed like a daydream'?", answer: "Blank Space" },
+            { question: "Which Taylor Swift album features the song 'Gorgeous'?", answer: "Reputation" },
+            { question: "Which song did Taylor Swift dedicate to her mom?", answer: "The Best Day" },
+            { question: "Which Taylor Swift album contains the song 'Death by a Thousand Cuts'?", answer: "Lover" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...taylorSwiftQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Change color of the yellow box when a color box is clicked
+        greenBox.addEventListener("click", () => {
+            yellowBox.style.backgroundColor = "#7FD15A";
+        });
+
+        orangeBox.addEventListener("click", () => {
+            yellowBox.style.backgroundColor = "#FF914D";
+        });
+
+        redBox.addEventListener("click", () => {
+            yellowBox.style.backgroundColor = "#EE1D23";
+        });
+
+        purpleBox.addEventListener("click", () => {
+            yellowBox.style.backgroundColor = "#8456E5";
+        });
+
+        // Generate a random question and display it when the yellow box is clicked
+        yellowBox.addEventListener("click", () => {
+            questionIndex = (questionIndex + 1) % shuffledQuestions.length;
+            displayQuestion();
+        });
+
+        // Initialize questions on page load
+        window.onload = initializeQuestions;
+    </script>
+
+</body>
+</html>
